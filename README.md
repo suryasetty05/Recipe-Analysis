@@ -3,8 +3,7 @@ This is a project for DSC80 about recipes.
 
 # Introduction
 
-The general rise of obesity in recent years has been attributed by the National Institute of Health (NIH) to a suboptimal diet that maximizes added sugars, saturated and trans fats, and sodium. These diets implicate that most of the food we eat contains a disproportionate amount of sodium, added sugar, and bad fats compared to our bodily needs. Much of the rise of sodium can be attributed to salty foods, while bad fats can be traced to partially hydrogenated vegetable oils, common in fried foods, margarine, and shortening for baked goods. Saturated fats often come from fatty meats, cheese, and butter.
-https://www.nhlbi.nih.gov/news/2016/new-dietary-guidelines-urge-americans-eat-less-added-sugars-saturated-fat-and-sodium
+The general rise of obesity in recent years has been attributed by the National Institute of Health (NIH) to a suboptimal diet that maximizes added sugars, saturated and trans fats, and sodium. These diets implicate that most of the food we eat contains a disproportionate amount of sodium, added sugar, and bad fats compared to our bodily needs. Much of the rise of sodium can be attributed to salty foods, while bad fats can be traced to partially hydrogenated vegetable oils, common in fried foods, margarine, and shortening for baked goods. Saturated fats often come from fatty meats, cheese, and butter. The National Institute of Health (NIH) has attempted to change these tastes in [recent years](https://www.nhlbi.nih.gov/news/2016/new-dietary-guidelines-urge-americans-eat-less-added-sugars-saturated-fat-and-sodium).
 
 The rise of these dietary trends should be correlated with consumer preference, which is what makes it difficult to change eating habits or preferences. As a result, it could be evident that diets that contain more bad fats sodium are related to how good consumers would rate it. Taking data of recipes and their rating, I will answer the initial question of: 
 
@@ -263,6 +262,8 @@ I applied the log function transformer to total fat and saturated fat because th
 
 Most of the advantage in score came from the use of adding more features. Despite the correlations that the transformed columns had with its pearsonr, I found that the transformations hampered interpretability and reduced the score that had accrued. The resulting score from this refined model was 0.394.
 
-After the use of gridsearchCV with hyperparameters linearregression__fit_intercept (to add an intercept or not) and 'columntransformer__scaler__copy': [True, False], which says to add a copy of the original data back into X. This improved my score to 0.47. 
+After the use of gridsearchCV with hyperparameters linearregression__fit_intercept (to add an intercept or not) and 'columntransformer__scaler__copy': [True, False], which says to add a copy of the original data back into X. This improved my score to 0.47. My final model is much better than my baseline model. It's results imply that giving the model more dimensions allow the model to reduce noise. The final model predictions are twice as good it was in the original model, meaning that the predicted number of steps is much closer to the actual values.
+
+# Fairness Analysis
 
 
