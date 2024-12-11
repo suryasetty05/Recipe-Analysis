@@ -112,20 +112,52 @@ might have started shifting the average steps up.
 
 I created the column sat_fat_prop, created by convert saturated fat to calories (by multiplying by 9) and then dividing by calories for every recipe. The values are n_ingredients and n_steps. We can see that smaller sat_fat_props correspond to having more steps and ingredients. This implies that the more saturated fat a recipe has, the more likely that it has less ingredients it has (or the converse). 
 
-'|   sat_fat_prop |   n_ingredients |   n_steps |\n|---------------:|----------------:|----------:|\n|            0   |         6.82355 |   7.19078 |\n|            0.1 |         9.71026 |   9.36697 |\n|            0.2 |        10.0299  |   9.71636 |\n|            0.3 |         9.90993 |   9.74334 |\n|            0.4 |        10.0542  |   9.8965  |'
-'|   sat_fat_prop |   n_ingredients |   n_steps |\n|---------------:|----------------:|----------:|\n|            4.1 |             3   |      7    |\n|            4.2 |             4   |      6    |\n|            4.3 |             4.5 |      7.75 |'
+| sat_fat_prop | n_ingredients | n_steps  |
+|---------------|----------------|----------|
+| 0             | 6.82355        | 7.19078  |
+| 0.1           | 9.71026        | 9.36697  |
+| 0.2           | 10.0299        | 9.71636  |
+| 0.3           | 9.90993        | 9.74334  |
+| 0.4           | 10.0542        | 9.8965   |
+| ...           | ...            | ...     |
+| 4.1           | 3              | 7       |
+| 4.2           | 4              | 6       |
+| 4.3           | 4.5            | 7.75    |
 
 # Assessment of Missingness
 
-'|             |     0 |\n|:------------|------:|\n| name        |     1 |\n| description |   114 |\n| user_id     |     1 |\n| recipe_id   |     1 |\n| date        |     1 |\n| rating      | 15036 |\n| review      |    58 |\n| year        |     1 |'
+| column       |    Number Missing   |
+|:-------------|-------:|
+| name         |     1  |
+| description  |   114  |
+| user_id      |     1  |
+| recipe_id    |     1  |
+| date         |     1  |
+| rating       | 15036  |
+| review       |    58  |
+| year         |     1  |
 
 The dataframe above shows the number of missing values for the reviews (the merged dataframe from earlier) dataframe. As we can see, the rating, description, and review column have a significant number of missing values.
 
-'|   year |   review_missing |\n|-------:|-----------------:|\n|   2008 |                0 |\n|   2009 |                0 |\n|   2010 |                0 |\n|   2011 |                0 |\n|   2012 |                0 |\n|   2013 |                4 |\n|   2014 |                0 |\n|   2015 |                0 |\n|   2016 |                4 |\n|   2017 |               33 |\n|   2018 |               16 |'
+| year | review_missing |
+|------|----------------|
+| 2008 |              0 |
+| 2009 |              0 |
+| 2010 |              0 |
+| 2011 |              0 |
+| 2012 |              0 |
+| 2013 |              4 |
+| 2014 |              0 |
+| 2015 |              0 |
+| 2016 |              4 |
+| 2017 |             33 |
+| 2018 |             16 |
 
 The column 'review' may be Not Missing At Random (NMAR) because its missingness depends on when the review was submitted, or which moderators might delete reviews. For example, the years 2017 and 2018 had a disproportionate amount of missing values, which may depend on the discretion of the moderation team to remove reviews, which may have become more strict in recent years.
 
 In these next steps, I'm going to test if the missingness of the 'rating' column is dependent on certain features.
+
+
 
 Driving Question: Is the missingness of rating dependent on the number of ingredients of the recipe? If people have more steps, they may be more likely to get lost.
 
@@ -231,6 +263,6 @@ I applied the log function transformer to total fat and saturated fat because th
 
 Most of the advantage in score came from the use of adding more features. Despite the correlations that the transformed columns had with its pearsonr, I found that the transformations hampered interpretability and reduced the score that had accrued. The resulting score from this refined model was 0.394.
 
-After the use of gridsearchCV with hyperparameters linearregression__fit_intercept (to add an intercept or not) and 'columntransformer__scaler__copy': [True, False], which says to add a copy of the original data back into X. This improved my score to 0.47
+After the use of gridsearchCV with hyperparameters linearregression__fit_intercept (to add an intercept or not) and 'columntransformer__scaler__copy': [True, False], which says to add a copy of the original data back into X. This improved my score to 0.47. 
 
 
