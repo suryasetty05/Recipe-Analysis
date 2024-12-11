@@ -71,3 +71,166 @@ An example of an element in ingredients, which is too large to display: ['bitter
 
 # Exploratory Data Analysis
 
+<iframe
+  src="assets/num_ingredients.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+This graph showing the distribution of the number of ingredients shows that most ingredients are fairly simple, concentrated around 6-11 elements. I'll test if this is related to sodium in the hypothesis testing section.
+
+<iframe
+  src="assets/avg_sat_fat.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+This tracks the rise of saturated fats and total fats, which include trans fats. This shows that the NIH was right about the rise of the unhealthy diet!
+
+<iframe
+  src="assets/steps.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+This trend is suspicious, it suggests the rise of fats is heavily correlated with the increase of steps. Let's check out if sodium has the same trend.
+
+<iframe
+  src="assets/high_sodium.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+For this plot, I assigned high_sodium to recipes with sodium levels that are higher than the 75th quartile of sodium, which is a daily value intake of 29%. This shows that recipes with high sodium
+might have started shifting the average steps up.
+
+# Aggregates
+
+I created the column sat_fat_prop, created by convert saturated fat to calories (by multiplying by 9) and then dividing by calories for every recipe. The values are n_ingredients and n_steps. We can see that smaller sat_fat_props correspond to having more steps and ingredients. This implies that the more saturated fat a recipe has, the more likely that it has less ingredients it has (or the converse). 
+
+'|   sat_fat_prop |   n_ingredients |   n_steps |\n|---------------:|----------------:|----------:|\n|            0   |         6.82355 |   7.19078 |\n|            0.1 |         9.71026 |   9.36697 |\n|            0.2 |        10.0299  |   9.71636 |\n|            0.3 |         9.90993 |   9.74334 |\n|            0.4 |        10.0542  |   9.8965  |'
+'|   sat_fat_prop |   n_ingredients |   n_steps |\n|---------------:|----------------:|----------:|\n|            4.1 |             3   |      7    |\n|            4.2 |             4   |      6    |\n|            4.3 |             4.5 |      7.75 |'
+
+# Assessment of Missingness
+
+'|             |     0 |\n|:------------|------:|\n| name        |     1 |\n| description |   114 |\n| user_id     |     1 |\n| recipe_id   |     1 |\n| date        |     1 |\n| rating      | 15036 |\n| review      |    58 |\n| year        |     1 |'
+
+The dataframe above shows the number of missing values for the reviews (the merged dataframe from earlier) dataframe. As we can see, the rating, description, and review column have a significant number of missing values.
+
+'|   year |   review_missing |\n|-------:|-----------------:|\n|   2008 |                0 |\n|   2009 |                0 |\n|   2010 |                0 |\n|   2011 |                0 |\n|   2012 |                0 |\n|   2013 |                4 |\n|   2014 |                0 |\n|   2015 |                0 |\n|   2016 |                4 |\n|   2017 |               33 |\n|   2018 |               16 |'
+
+The column 'review' may be Not Missing At Random (NMAR) because its missingness depends on when the review was submitted, or which moderators might delete reviews. For example, the years 2017 and 2018 had a disproportionate amount of missing values, which may depend on the discretion of the moderation team to remove reviews, which may have become more strict in recent years.
+
+In these next steps, I'm going to test if the missingness of the 'rating' column is dependent on certain features.
+
+Driving Question: Is the missingness of rating dependent on the number of ingredients of the recipe? If people have more steps, they may be more likely to get lost.
+
+Null Hypothesis: The missingness of rating is not dependent on the number of ingredients of the recipe. The missingness of rating depends on random chance.
+
+Alternative Hypothesis: Ratings are more likely to be missing for recipes with too many ingredients. People might get lost, forget ingredients, or substitute ingredients so they feel like their version they made is different than the food.com recipe.
+
+Significance Level: 0.05
+
+Test statistic: Difference in means, missing[True] - missing[False]
+
+<iframe
+  src="assets/n_ingredients_permute.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The p_value is 0, and the observed mean difference shows that recipes with missing ratings have more ingredients on average. Since the p_value is less than the significance level, we reject the null hypothesis.
+
+
+
+Driving Question: Is the missingness of rating dependent on the how long the recipe takes? If people aren't patient, they might feel like they don't want to spend more time on anything related to the recipe.
+
+Null Hypothesis: The missingness of rating is not dependent on how long the recipe takes. The missingness of rating depends on random chance.
+
+Alternative Hypothesis: Ratings are more likely to be missing for recipes that take a longer period of time.
+
+Significance Level: 0.05
+
+Test statistic: Difference in means, missing[True] - missing[False]
+
+<iframe
+  src="assets/minutes_permute.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Our observed mean difference is within the range of the histogram, and this is shown in the p_value of 0.135, which is greater than the significance level 0.05. This test fails to reject the null hypothesis.
+
+# Hypothesis Testing
+
+Let's check if high sodium foods have more steps and ingredients.
+
+Null Hypothesis: The distribution of the number of steps is not dependent on if the food has more sodium in it.
+
+Alternative Hypothesis: Foods with more sodium have more steps, on average, such that the number of steps is correlated or dependent on sodium.
+
+Test Statistic: Difference in means, high_sodium[True] - high_sodium[False] -> permute high_sodium
+
+Significance Level: 0.05
+
+<iframe
+  src="assets/sodium_steps.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The observed value is 0.305, greater than the mode of 0 and the distribution of the difference of means. The p_value is 0.0, lower than the significance level of 0.05. This rejects the null hypothesis.
+
+
+Null Hypothesis: The distribution of the number of ingredients is not dependent on if the food has more sodium in it.
+
+Alternative Hypothesis: Foods with more sodium have more ingredients, on average, such that the number of ingredients is correlated or dependent on sodium.
+
+Test Statistic: Difference in means, high_sodium[True] - high_sodium[False] -> permute high_sodium
+
+<iframe
+  src="assets/sodium_ingredients.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The observed statistic is 1.346, greater than the average near 0 and the p_value is 0.0. This is lower than our significance level of 0.05. This rejects the null hypothesis.
+
+# Framing a Prediction Problem
+
+As we've seen in previous sections, the number of steps seems correlated with our nutrition data. Though n_steps is a discrete random variable, the continuous form of n_steps that results from regression still represents numerical data the best. It can also be converted easily back to a discrete variable for use through rounding. The reason I'm choosing a linear regression classifier over a decision tree regressor is because the linear regression classifier can also take advantage of categorical data. For example, the word carrot in ingredients might mean that the carrots should be sliced or grated. I used name so that we can predict that 'cakes' likely take a longer time to make than 'apples' contributing to a higher score.
+
+The metric that I'm using is R^2 or equivalently the score method on the linear regression qualifier. It minimizes residuals. Compared to ridge regression, the model should not care about whether the coefficients are large or small, as the data is not all standardized. Compared to lasso regression, the default linear regressor is more interpretable and makes more sense if I'm selecting features versus whether the model selects features.
+
+For this section, the model will not have access to the steps (str) column from earlier that contains a list of steps, or n_steps, our y-value.
+
+# Baseline Model
+
+In the baseline model, I used LinearRegression() from sklearn. I used 3 quantitative columns, 'sodium', 'saturated fat' and 'n_ingredients', where the first two are discrete and the latter is continuous. I used 2 qualitative columns, ingredients and name. Ingredients and name are nominal by technicality. I used a CountVectorizer() independently on ingredients (after transforming it outside the function to be easier to parse) and name. I attempted to use a Binarizer(threshold = 29), where 29 is the high_sodium classifier from earlier, but this made the model worse, losing a significant amount of score. The score I received on this model is 0.25, which shows that my data is likely scattered and doesn't have enough features.
+
+This model isn't great. It predictions seem too dependent on the correlations determined previously, which we see now as weak. As a result, I attempted the use of a DecisionTreeRegressor(), but the score for that model at depth = 15 was roughly 0.18, which is not an improvement for the extra computing time needed for the method. The score implies the model is overly simplistic and recommends either I use more features, polynomials, or classification. As a result, I'll use more features.
+
+# Final Model
+
+I judged which features to use in this model initially by using the spearmanr function and then using the pearsonr function to find correlations. Spearman uses ranking while Pearson uses linearity. Using iteration, I found which features are most similar to my data. As a result, I'm using the five features mentioned in Baseline Model, along with: 
+1. minutes (quantitative, discrete), since steps take time
+2. calories('#') (quantitative, discrete) since the more food you're making, you take more time
+3. total fat (quantiative, discrete) since it's related to saturated fats and all other fats, avoiding collinearity and adding a significant features
+4. carbohydrates (quantitative, discrete) since it's a minor correlated feature, makes the model better at getting closer values
+5. protein (quantitative, discrete) since meat usually takes more steps to cook than vegetables
+
+I applied the log function transformer to total fat and saturated fat because there was a marginal benefit to using np.log. It's a minor chance that likely occurs due to smoothening out the fat curves, making the model slightly better at capturing noise. I also applied the StandardScaler() to n_ingredients() as it can improve the interpretability of the model. I used a QuantileTransformer() on carbohydrates to reduce the impact of outliers. 
+
+Most of the advantage in score came from the use of adding more features. Despite the correlations that the transformed columns had with its pearsonr, I found that the transformations hampered interpretability and reduced the score that had accrued. The resulting score from this refined model was 0.394.
+
+After the use of gridsearchCV with hyperparameters linearregression__fit_intercept (to add an intercept or not) and 'columntransformer__scaler__copy': [True, False], which says to add a copy of the original data back into X. This improved my score to 0.47
+
+
