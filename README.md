@@ -52,17 +52,17 @@ I'll start with preliminary data cleaning.
 7. Drop columns that I won't use in this analysis. Some columns like tags, are subjective and may depend on the user's input. Other columns like contributer_id and user_id are nominal, and would result in poor data quality.
 
 Here's a view of the cleaned dataframe of recipes:
-| name                                 |   minutes | submitted           | nutrition                                    |   n_steps |
-|:-------------------------------------|----------:|:--------------------|:---------------------------------------------|----------:|
-| 1 brownies in the world    best ever |        40 | 2008-10-27 00:00:00 | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]     |        10 |
-| 1 in canada chocolate chip cookies   |        45 | 2011-04-11 00:00:00 | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0] |        12 |
-| 412 broccoli casserole               |        40 | 2008-05-30 00:00:00 | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]    |         6 |
+| Name                           | Minutes | Submitted           | Nutrition                                    | Steps |
+|:-------------------------------|--------:|:--------------------|:---------------------------------------------|-------:|
+| Best Ever Brownies             |      40 | 2008-10-27 00:00:00 | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]     |     10 |
+| Canadian Chocolate Chip Cookies |      45 | 2011-04-11 00:00:00 | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0] |     12 |
+| Broccoli Casserole             |      40 | 2008-05-30 00:00:00 | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]    |      6 |
 
-|   n_ingredients |   average_rating |   calories(#) |   total_fat |   sugar |   sodium |   protein |   saturated fat |   carbohydrates |
-|----------------:|-----------------:|--------------:|------------:|--------:|---------:|----------:|----------------:|----------------:|
-|               9 |                4 |         138.4 |          10 |      50 |        3 |         3 |              19 |               6 |
-|              11 |                5 |         595.1 |          46 |     211 |       22 |        13 |              51 |              26 |
-|               9 |                5 |         194.8 |          20 |       6 |       32 |        22 |              36 |               3 |
+| Ingredients | Avg Rating | Calories | Total Fat | Sugar | Sodium | Protein | Sat Fat | Carbs |
+|-------------|-----------:|---------:|----------:|------:|-------:|--------:|--------:|------:|
+|           9 |          4 |     138.4 |        10 |    50 |      3 |       3 |      19 |     6 |
+|          11 |          5 |     595.1 |        46 |   211 |     22 |      13 |      51 |    26 |
+|           9 |          5 |     194.8 |        20 |     6 |     32 |      22 |      36 |     3 |
 
 An example of an element in steps, which is too large to display: "['heat the oven to 350f and arrange the rack in the middle', 'line an 8-by-8-inch glass baking dish with aluminum foil', 'combine chocolate and butter in a medium saucepan and cook over medium-low heat , stirring frequently , until evenly melted', 'remove from heat and let cool to room temperature', 'combine eggs , sugar , cocoa powder , vanilla extract , espresso , and salt in a large bowl and briefly stir until just evenly incorporated', 'add cooled chocolate and mix until uniform in color', 'add flour and stir until just incorporated', 'transfer batter to the prepared baking dish', 'bake until a tester inserted in the center of the brownies comes out clean , about 25 to 30 minutes', 'remove from the oven and cool completely before cutting']"
 
@@ -73,7 +73,7 @@ An example of an element in ingredients, which is too large to display: ['bitter
 <iframe
   src="assets/num_ingredients.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
