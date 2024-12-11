@@ -83,7 +83,7 @@ This graph showing the distribution of the number of ingredients shows that most
 <iframe
   src="assets/avg_sat_fat.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -92,7 +92,7 @@ This tracks the rise of saturated fats and total fats, which include trans fats.
 <iframe
   src="assets/steps.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -101,7 +101,7 @@ This trend is suspicious, it suggests the rise of fats is heavily correlated wit
 <iframe
   src="assets/high_sodium.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -140,7 +140,7 @@ Test statistic: Difference in means, missing[True] - missing[False]
 <iframe
   src="assets/n_ingredients_permute.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -161,7 +161,7 @@ Test statistic: Difference in means, missing[True] - missing[False]
 <iframe
   src="assets/minutes_permute.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -182,7 +182,7 @@ Significance Level: 0.05
 <iframe
   src="assets/sodium_steps.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -198,7 +198,7 @@ Test Statistic: Difference in means, high_sodium[True] - high_sodium[False] -> p
 <iframe
   src="assets/sodium_ingredients.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
