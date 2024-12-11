@@ -72,7 +72,7 @@ An example of an element in ingredients, which is too large to display: ['bitter
 # Exploratory Data Analysis
 
 <iframe
-  src="assets/num_ingredients"
+  src="assets/num_ingredients.html"
   width="800"
   height="600"
   frameborder="0"
@@ -81,7 +81,7 @@ An example of an element in ingredients, which is too large to display: ['bitter
 This graph showing the distribution of the number of ingredients shows that most ingredients are fairly simple, concentrated around 6-11 elements. I'll test if this is related to sodium in the hypothesis testing section.
 
 <iframe
-  src="assets/avg_sat_fat"
+  src="assets/avg_sat_fat.html"
   width="800"
   height="600"
   frameborder="0"
