@@ -264,6 +264,5 @@ Most of the advantage in score came from the use of adding more features. Despit
 
 After the use of gridsearchCV with hyperparameters linearregression__fit_intercept (to add an intercept or not) and 'columntransformer__scaler__copy': [True, False], which says to add a copy of the original data back into X. This improved my score to 0.47. My final model is much better than my baseline model. It's results imply that giving the model more dimensions allow the model to reduce noise. The final model predictions are twice as good it was in the original model, meaning that the predicted number of steps is much closer to the actual values.
 
-# Fairness Analysis
 
 
